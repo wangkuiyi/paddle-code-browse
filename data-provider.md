@@ -8,7 +8,7 @@ Yi Wang
 一个 Paddle 程序通常包括两个部分：data provider 和 主程序。
 
 
-在 Paddle 的 [Quick Start tutorial](http://www.paddlepaddle.org/doc/demo/quick_start/index_en.html) 里，一个很简答主程序是 [trainer_config.lr.py](https://github.com/baidu/Paddle/blob/master/demo/quick_start/trainer_config.lr.py)，其中[调用](https://github.com/baidu/Paddle/blob/master/demo/quick_start/trainer_config.lr.py#L35)函数 `define_py_data_source2` 指定了它的 data provider：
+在 Paddle 的 [Quick Start tutorial](http://www.paddlepaddle.org/doc/demo/quick_start/index_en.html) 里，一个很简单的主程序是 [trainer_config.lr.py](https://github.com/baidu/Paddle/blob/master/demo/quick_start/trainer_config.lr.py)，其中[调用](https://github.com/baidu/Paddle/blob/master/demo/quick_start/trainer_config.lr.py#L35)函数 `define_py_data_source2` 指定了它的 data provider：
 
 ```
 define_py_data_sources2(train_list=trn,
@@ -77,7 +77,7 @@ paddle train \
                            data_cls=None)
 ```
 
-而  [`define_py_data_sources`](https://github.com/baidu/Paddle/blob/master/python/paddle/trainer_config_helpers/data_sources.py#L97) 调用了两次 [`define_py_data_source2`](https://github.com/baidu/Paddle/blob/master/python/paddle/trainer_config_helpers/data_sources.py#L29)：
+而  [`define_py_data_sources`](https://github.com/baidu/Paddle/blob/master/python/paddle/trainer_config_helpers/data_sources.py#L97) 调用了两次 [`define_py_data_source`](https://github.com/baidu/Paddle/blob/master/python/paddle/trainer_config_helpers/data_sources.py#L29)：
 
 ```
         define_py_data_source(file_list=train_list, cls=TrainData, module, obj, args, 
@@ -87,13 +87,13 @@ paddle train \
                 train_asycn=False, data_cls=None)
 ```
 
-[`define_py_data_source2`](https://github.com/baidu/Paddle/blob/master/python/paddle/trainer_config_helpers/data_sources.py#L29) 做了如下工作：
+[`define_py_data_source`](https://github.com/baidu/Paddle/blob/master/python/paddle/trainer_config_helpers/data_sources.py#L29) 做了如下工作：
 
 
 1. 如果 `file_list` 是一个 Python list，则将其转换成一个列出数据文件的文本文件
 
 
-1. 因为上面里子里的参数 `data_cls` 是 `None`，所以 `define_py_data_source` 把 `data_cls` 设置为嵌套定义的函数 [`py_data2`](https://github.com/baidu/Paddle/blob/master/python/paddle/trainer_config_helpers/data_sources.py#L79)。 
+1. 因为上面例子里的参数 `data_cls` 是 `None`，所以 `define_py_data_source` 把 `data_cls` 设置为嵌套定义的函数 [`py_data2`](https://github.com/baidu/Paddle/blob/master/python/paddle/trainer_config_helpers/data_sources.py#L79)。 
 
    ```
        if data_cls is None:
